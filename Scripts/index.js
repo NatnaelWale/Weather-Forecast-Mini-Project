@@ -36,8 +36,6 @@ function populateSelectname(){
     }
 }
 
-
-
 function populateCitiesData(selectedCity){
     const cityForecastListings = document.getElementById('cityForecastListings');
     if (cityForecastListings) {
@@ -79,7 +77,7 @@ function populateCitiesData(selectedCity){
         thead.appendChild(headerRow);
         table.appendChild(thead);
            for(let forecast of data.properties.periods){
-             console.log(forecast);
+            // console.log(forecast);
             const row = document.createElement("tr");
             row.appendChild(createCell(forecast.name));
             row.appendChild(createCell(`Temprature ${forecast.temperature} ${forecast.temperatureUnit}`));
