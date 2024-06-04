@@ -1,0 +1,11 @@
+body {
+    background-color: rgb(206, 228, 206);
+}
+main > div{
+    min-height: 900px;
+    background-color: rgb(206, 228, 206);
+    box-shadow: 5px 10px 500px grey;
+}
+.outset {
+    border-style: outset;
+}
