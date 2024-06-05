@@ -68,7 +68,7 @@ function populateCitiesData(selectedCity){
         tbody.className = "table-group-divider";
 
         const headerRow = document.createElement("tr");
-        ["Time/Date", "Temprature", "Wind", "Forecast"].forEach(text => {
+        ["Time/Date", "Temprature", "Wind", "Forecast", "Icon"].forEach(text => {
             const header = document.createElement("th");
             header.textContent = text;
             headerRow.appendChild(header);
@@ -83,6 +83,7 @@ function populateCitiesData(selectedCity){
             row.appendChild(createCell(`Temprature ${forecast.temperature} ${forecast.temperatureUnit}`));
             row.appendChild(createCell(`Winds ${forecast.windDirection} ${forecast.windSpeed}`));
             row.appendChild(createCell(forecast.shortForecast))
+            row.appendChild(createIconData(forecast.icon));
             tbody.appendChild(row);
         };
         table.appendChild(tbody);
@@ -96,4 +97,13 @@ function createCell(text) {
     cell.textContent = text;
     cell.className = "w-25"
     return cell;
+}
+
+function createIconData(iconUrl){
+    const cell = document.createElement("td");
+    const iconImage = document.createElement("img");
+          iconImage.src = iconUrl;
+        //   iconImage.className = "w-25";
+          cell.appendChild(iconImage);
+          return iconImage;
 }
