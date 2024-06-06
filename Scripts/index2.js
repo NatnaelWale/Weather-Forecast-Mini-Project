@@ -19,10 +19,10 @@ const selectCity = document.getElementById("selectCity");
 
 
 window.onload = () => {
-    populateSelectname();
+    populateSelectName();
 }
 
-function populateSelectname(){
+function populateSelectName(){
     let citySelect = document.createElement("select");
     citySelect.className = "col-lg-5 form-control"
     citySelect.addEventListener('change', () => populateCitiesData(citySelect.value))
@@ -37,7 +37,7 @@ function populateSelectname(){
 
 function populateCitiesData(selectedCity) {
     clearPreviousListings();
-    const selectedCityData = getSelectedCityData(selectedCity);
+    const selectedCityData = cities.find(city => city.name === selectedCity);
     // console.log(selectedCityData);
     if (selectedCityData) {
         fetchWeatherData(selectedCityData.latitude, selectedCityData.longitude)
@@ -52,10 +52,6 @@ function clearPreviousListings() {
     }
 };
 
-function getSelectedCityData(selectedCity) {
-    return cities.find(city => city.name === selectedCity);
-};
-
 function fetchWeatherData(latitude, longitude) {
     const apiUrl = `https://api.weather.gov/points/${latitude},${longitude}`;
     return fetch(apiUrl)
@@ -68,17 +64,19 @@ function displayForecastData(data) {
     const selectedCityForecastData = document.getElementById('selectedCityForecastData');
     selectedCityForecastData.innerHTML = "";
     const table = createForecastTable();
-    data.properties.periods.forEach(forecast => {
-        const row = document.createElement("tr");
-        row.appendChild(createCell(forecast.name));
-        row.appendChild(createCell(`Temperature ${forecast.temperature} ${forecast.temperatureUnit}`));
-        row.appendChild(createCell(`Winds ${forecast.windDirection} ${forecast.windSpeed}`));
-        row.appendChild(createCell(forecast.shortForecast));
-        row.appendChild(createIconData(forecast.icon));
-        table.querySelector("tbody").appendChild(row);
-    });
+    data.properties.periods.forEach(period => createRowFromPeriods(period, table));
 
     selectedCityForecastData.appendChild(table);
+}
+
+function createRowFromPeriods(period, table){
+  const row = document.createElement("tr");
+        row.appendChild(createCell(period.name));
+        row.appendChild(createCell(`Temperature ${period.temperature} ${period.temperatureUnit}`));
+        row.appendChild(createCell(`Winds ${period.windDirection} ${period.windSpeed}`));
+        row.appendChild(createCell(period.shortForecast));
+        row.appendChild(createIconData(period.icon));
+        table.querySelector("tbody").appendChild(row);
 }
 
 function createForecastTable() {
